@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/title_layout_height"
         android:background="@color/background"
-        android:textSize="20sp"
+        android:textSize="@dimen/release_textsize"
         android:textColor="@color/textColor"
         android:text="@string/title"
         android:paddingLeft="@dimen/title_paddingLeft"
@@ -37,7 +37,7 @@
             android:id="@+id/poster_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
+            android:layout_margin="@dimen/imageview_margin"
             android:src="@drawable/sample_0"
             android:layout_gravity="center|start"/>
 
@@ -88,7 +88,7 @@
                 android:id="@+id/tab_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:elevation="6dp"
+                android:elevation="@dimen/tabLayout_elevation"
                 app:tabTextColor="@color/tab_text_color"
                 app:tabSelectedTextColor="@color/selected_tab_text_color"
                 android:minHeight="?attr/actionBarSize"
