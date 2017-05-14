@@ -2,12 +2,11 @@ package com.stephenomoarukhe.android.popularmovies.ui;
 
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.os.AsyncTask;
+import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
@@ -103,7 +102,13 @@ public static final String MOVIE = "movie";
             @Override
             public MovieData[] loadInBackground() {
 
-                URL movieRequestUrl = NetworkUtils.buildUrl(args.getString(SORT_DATA_KEY));
+                String sortParameter = args.getString(SORT_DATA_KEY);
+
+                if (sortParameter == getResources().getString(R.string.favorite)){
+                    return DbUtils.getFavoriteMovies(getApplicationContext());
+                }
+
+                URL movieRequestUrl = NetworkUtils.buildUrl(sortParameter);
 
                 try {
                     String jsonMovieResponse = NetworkUtils
@@ -214,24 +219,20 @@ public static final String MOVIE = "movie";
             getSupportLoaderManager().restartLoader(MOVIE_LOADER_ID, sortBundle, this);
 
         }else if(item.getItemId() == R.id.favorite_rated_item){
-            AsyncTask mBackgroundTask = new AsyncTask<Object, Object, MovieData[]>(){
 
-                @Override
-                protected MovieData[] doInBackground(Object... params) {
-                    return DbUtils.getFavoriteMovies(getApplicationContext());
-                }
-
-                @Override
-                protected void onPostExecute(MovieData[] movieDatas) {
-                    gridLayoutAdapter.setMovieData(movieDatas);
-                }
-            };
-            mBackgroundTask.execute();
+            sortBundle.putString(SORT_DATA_KEY, getResources().getString(R.string.favorite));
+            mLoadingIndicator.setVisibility(View.VISIBLE);
+            getSupportLoaderManager().restartLoader(MOVIE_LOADER_ID, sortBundle, this);
 
         }else {
             alertUserOfError();
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 }

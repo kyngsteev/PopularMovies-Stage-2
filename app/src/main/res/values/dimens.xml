@@ -14,4 +14,5 @@
     <dimen name="overview_layout_margin">20dp</dimen>
     <dimen name="imageview_margin">5dp</dimen>
     <dimen name="tabLayout_elevation">6dp</dimen>
+    <dimen name="app_bar_height">300dp</dimen>
 </resources>

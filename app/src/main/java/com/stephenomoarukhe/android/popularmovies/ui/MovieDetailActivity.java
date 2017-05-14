@@ -1,14 +1,18 @@
 package com.stephenomoarukhe.android.popularmovies.ui;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.database.Cursor;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.NavUtils;
 import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -59,7 +63,11 @@ public class MovieDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_movie_detail);
         ButterKnife.bind(this);
 
+
+//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+//        setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
 
 
         final ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
@@ -70,6 +78,14 @@ public class MovieDetailActivity extends AppCompatActivity {
         tabLayout.setupWithViewPager(viewPager);
 
         selectedMovie = getIntent().getParcelableExtra(MOVIE);
+
+
+        CollapsingToolbarLayout collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
+        if(this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+            collapsingToolbarLayout.setTitle(selectedMovie.getOriginalTitle());
+            collapsingToolbarLayout.setExpandedTitleTextAppearance(R.style.ExpandedAppBar);
+
+        }
 
         title.setText(selectedMovie.getOriginalTitle());
         userRating.setText(selectedMovie.getVoteAverage() + "/10");
@@ -92,9 +108,13 @@ public class MovieDetailActivity extends AppCompatActivity {
         if(isFavorite()){
             starImage.setImageDrawable(emptyStar);
             removeMovieFromFavorites();
+            Snackbar.make(view, "Movie removed from Favorites", Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show();
         }else{
             starImage.setImageDrawable(fillStar);
             addMovieToFavorites();
+            Snackbar.make(view, "Movie added to Favorites", Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show();
         }
 
     }
