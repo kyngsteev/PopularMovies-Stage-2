@@ -12,11 +12,11 @@ import android.support.v4.app.NavUtils;
 import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.squareup.picasso.Picasso;
 import com.stephenomoarukhe.android.popularmovies.R;
 import com.stephenomoarukhe.android.popularmovies.adapter.PagerAdapter;
@@ -63,12 +63,7 @@ public class MovieDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_movie_detail);
         ButterKnife.bind(this);
 
-
-//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-//        setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-
 
         final ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
         final PagerAdapter adapter = new PagerAdapter
@@ -78,7 +73,6 @@ public class MovieDetailActivity extends AppCompatActivity {
         tabLayout.setupWithViewPager(viewPager);
 
         selectedMovie = getIntent().getParcelableExtra(MOVIE);
-
 
         CollapsingToolbarLayout collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
         if(this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {

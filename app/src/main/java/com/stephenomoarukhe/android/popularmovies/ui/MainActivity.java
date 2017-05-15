@@ -236,8 +236,7 @@ private Bundle sortBundle;
     protected void onResume() {
         super.onResume();
         if( sortBundle != null && sortBundle.getString(SORT_DATA_KEY) == getResources().getString(R.string.favorite)) {
-            MovieData[] movieData = DbUtils.getFavoriteMovies(this);
-            gridLayoutAdapter.setMovieData(movieData);
+            getSupportLoaderManager().restartLoader(MOVIE_LOADER_ID, sortBundle, this);
         }
     }
 }
