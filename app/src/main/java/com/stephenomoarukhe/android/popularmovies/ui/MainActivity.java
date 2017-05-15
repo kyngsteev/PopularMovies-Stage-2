@@ -47,6 +47,7 @@ private GridLayoutAdapter gridLayoutAdapter;
 public static final String SORT_DATA_KEY = "key";
 private static final int MOVIE_LOADER_ID = 0;
 public static final String MOVIE = "movie";
+private Bundle sortBundle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -204,7 +205,7 @@ public static final String MOVIE = "movie";
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        Bundle sortBundle = new Bundle();
+        sortBundle = new Bundle();
 
         if(NetworkUtils.isNetworkAvailable(this) && item.getItemId() == R.id.popular_item) {
 
@@ -234,5 +235,9 @@ public static final String MOVIE = "movie";
     @Override
     protected void onResume() {
         super.onResume();
+        if( sortBundle != null && sortBundle.getString(SORT_DATA_KEY) == getResources().getString(R.string.favorite)) {
+            MovieData[] movieData = DbUtils.getFavoriteMovies(this);
+            gridLayoutAdapter.setMovieData(movieData);
+        }
     }
 }
